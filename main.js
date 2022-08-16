@@ -11,6 +11,7 @@ const map = new Map({
   container: "map",
   projection: "globe",
   style: "mapbox://styles/mapbox/satellite-v9",
+  zoom: 2,
 });
 
 // Make map instance available in console
@@ -53,12 +54,9 @@ map.on("style.load", () => {
   map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
 
   // Spin effect
-  // At low zooms, complete a revolution every two minutes.
-  const secondsPerRevolution = 120;
-  // Above zoom level 5, do not rotate.
+  const secondsPerRevolution = 180;
   const maxSpinZoom = 4;
-  // Rotate at intermediate speeds between zoom levels 3 and 5.
-  const slowSpinZoom = 2;
+  const slowSpinZoom = 2.5;
   let userInteracting = false;
 
   function spinGlobe() {
@@ -108,4 +106,7 @@ map.on("style.load", () => {
   map.on("moveend", () => {
     spinGlobe();
   });
+
+  // Start spinning automatically
+  spinGlobe();
 });
